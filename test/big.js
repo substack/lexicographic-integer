@@ -11,9 +11,7 @@ test('big numbers', function (t) {
         if (cur <= prev) break;
         prev = cur;
         console.log(n, cur);
-        if (true || n > 256*256) {
-            skip = 1 + Math.pow(245, Math.ceil(Math.log(n) / Math.log(256)));
-        }
+        skip = 1 + Math.pow(245, Math.ceil(Math.log(n) / Math.log(256)));
     }
     t.equal(n, Infinity);
 });
