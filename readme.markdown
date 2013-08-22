@@ -4,6 +4,8 @@ create lexicographic string keys for positive integers without zero-padding
 
 Note: there is some loss of precision for very large values (> 2^32)
 
+[![build status](https://secure.travis-ci.org/substack/lexicographic-integer.png)](http://travis-ci.org/substack/lexicographic-integer)
+
 # example
 
 ``` js
