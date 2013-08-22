@@ -1,0 +1,33 @@
+{
+  "name": "lexicographic-integer",
+  "version": "0.0.0",
+  "description": "create lexicographic string keys for positive integers without zero-padding",
+  "main": "index.js",
+  "dependencies": {
+    "bytewise": "~0.5.0"
+  },
+  "devDependencies": {
+    "tape": "~1.0.4"
+  },
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/substack/lexicographic-integer.git"
+  },
+  "homepage": "https://github.com/substack/lexicographic-integer",
+  "keywords": [
+    "lexicographic",
+    "encoding",
+    "pack",
+    "padding",
+    "integer"
+  ],
+  "author": {
+    "name": "James Halliday",
+    "email": "mail@substack.net",
+    "url": "http://substack.net"
+  },
+  "license": "MIT"
+}
