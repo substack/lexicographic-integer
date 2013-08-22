@@ -9,16 +9,33 @@ for (var n = 1; true; n++) {
 console.log(n - 1);
 
 function convert (n) {
-    if (n < 127) {
-        return Buffer([ n ]).toString('hex');
+    var bytes;
+    var x = n - 252;
+    if (n < 252) {
+        bytes = [ n ];
     }
-    else {
-        var b = Math.floor((n - 127) / 256);
-        if (n < 192) {
-            return Buffer([ 127 + b, (n - 127) % 256 ]).toString('hex');
-        }
-        
-        var c = Math.floor((n - 127) / 256);
-        return Buffer([ 127 + b, (n - 127) % 256 ]).toString('hex');
+    else if (x < 256) {
+        bytes = [ 252, x ];
     }
+    else if (x < 256*256) {
+        bytes = [ 253, Math.floor(x / 256), x % 256 ];
+    }
+    else if (x < 256*256*256) {
+        bytes = [
+            254,
+            Math.floor(x / 256 / 256),
+            Math.floor(x / 256) % 256,
+            x % 256
+        ];
+    }
+    else if (x < 256*256*256*256) {
+        bytes = [
+            255,
+            Math.floor(x / 256 / 256 / 256),
+            Math.floor(x / 256 / 256) % 256,
+            Math.floor(x / 256) % 256,
+            x % 256
+        ];
+    }
+    return Buffer(bytes).toString('hex');
 }
