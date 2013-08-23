@@ -2,6 +2,9 @@
 
 create lexicographic string keys for positive integers without zero-padding
 
+At most, a number will take 10 bytes to store (2 more bytes than a regular
+double) but all numbers less than 251 only take a single byte.
+
 [![build status](https://secure.travis-ci.org/substack/lexicographic-integer.png)](http://travis-ci.org/substack/lexicographic-integer)
 
 # example
