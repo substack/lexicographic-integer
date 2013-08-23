@@ -1,6 +1,6 @@
 {
   "name": "lexicographic-integer",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "create lexicographic string keys for positive integers without zero-padding",
   "main": "index.js",
   "devDependencies": {
