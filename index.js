@@ -1,5 +1,6 @@
 module.exports = function convert (n, enc) {
     n = Math.floor(n);
+    if (n < 0 || n === Infinity) return undefined;
     
     var bytes;
     var max = 251;
@@ -31,9 +32,6 @@ module.exports = function convert (n, enc) {
             x % 256
         ];
     }
-    else if (n === Infinity) {
-        return undefined;
-    }
     else {
         var exp = Math.floor(Math.log(x) / Math.log(2)) - 32;
         bytes = [ 255 ];
@@ -56,10 +54,9 @@ module.exports = function convert (n, enc) {
 
 function bytesOf (x) {
     x = Math.floor(x);
-    return x.toString(16).split(/(..)/)
-        .filter(Boolean)
-        .map(function (c) {
-            return parseInt(c, 16);
-        })
-    ;
+    var bytes = [];
+    for (var i = 0, d = 1; i < 6; i++, d *= 256) {
+        bytes.unshift(Math.floor(x / d) % 256);
+    }
+    return bytes;
 }
