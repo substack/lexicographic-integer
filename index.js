@@ -38,9 +38,8 @@ module.exports = function convert (n, enc) {
         var exp = Math.floor(Math.log(x) / Math.log(2)) - 32;
         bytes = [ 255 ];
         bytes.push.apply(bytes, convert(exp));
-        bytes.push.apply(bytes, convert(
-            Math.floor(x / Math.pow(2, exp + 1))
-        ));
+        var res = x / Math.pow(2, exp - 11);
+        bytes.push.apply(bytes, bytesOf(x / Math.pow(2, exp - 11)));
     }
     if (enc === undefined || enc === 'array') return bytes;
     if (enc === 'hex') {
@@ -54,3 +53,13 @@ module.exports = function convert (n, enc) {
         return s;
     }
 };
+
+function bytesOf (x) {
+    x = Math.floor(x);
+    return x.toString(16).split(/(..)/)
+        .filter(Boolean)
+        .map(function (c) {
+            return parseInt(c, 16);
+        })
+    ;
+}
