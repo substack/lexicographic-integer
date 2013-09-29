@@ -52,6 +52,36 @@ module.exports = function convert (n, enc) {
     }
 };
 
+module.exports.unpack = function unpack (xs) {
+    if (xs.length === 1 && xs[0] < 251) {
+        return xs[0];
+    }
+    if (xs.length === 2 && xs[0] === 251) {
+        return 251 + xs[1];
+    }
+    if (xs.length === 3 && xs[0] === 252) {
+        return 251 + 256 * xs[1] + xs[2];
+    }
+    if (xs.length === 4 && xs[0] === 253) {
+        return 251 + 256 * 256 * xs[1] + 256 * xs[2] + xs[3];
+    }
+    if (xs.length === 5 && xs[0] === 254) {
+        return 251 + 256 * 256 * 256 * xs[1]
+            + 256 * 256 * xs[2] + 256 * xs[3] + xs[4]
+        ;
+    }
+    if (xs.length > 5 && xs[0] === 255) {
+        var m = 0, x = 1;
+        for (var i = xs.length - 1; i >= 2; i--) {
+            m += x * xs[i];
+            x *= 256;
+        }
+        var x = unpack([ xs[1] + 32 ]) - 11;
+        return 251 + m / Math.pow(2, 32 - x);
+    }
+    return undefined;
+};
+
 function bytesOf (x) {
     x = Math.floor(x);
     var bytes = [];
