@@ -72,12 +72,21 @@ module.exports.unpack = function unpack (xs) {
     }
     if (xs.length > 5 && xs[0] === 255) {
         var m = 0, x = 1;
-        for (var i = xs.length - 1; i >= 2; i--) {
+        var pivot = xs.length === 9 ? 3 : 2;
+        for (var i = xs.length - 1; i >= pivot; i--) {
             m += x * xs[i];
             x *= 256;
         }
-        var x = unpack([ xs[1] + 32 ]) - 11;
-        return 251 + m / Math.pow(2, 32 - x);
+        if (xs[1] + 32 < 251) {
+            var n = unpack([ xs[1] + 32 ]) - 11;
+        }
+        else if (xs[0] === 255 && xs[1] < 251) {
+            var n = xs[1] + 21;
+        }
+        else if (pivot === 3) {
+            var n = unpack([ xs[1], xs[2] + 21 ]);
+        }
+        return 251 + m / Math.pow(2, 32 - n);
     }
     return undefined;
 };
