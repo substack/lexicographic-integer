@@ -53,6 +53,8 @@ module.exports = function convert (n, enc) {
 };
 
 module.exports.unpack = function unpack (xs) {
+    if (!Array.isArray(xs)) return undefined;
+    
     if (xs.length === 1 && xs[0] < 251) {
         return xs[0];
     }
@@ -72,7 +74,7 @@ module.exports.unpack = function unpack (xs) {
     }
     if (xs.length > 5 && xs[0] === 255) {
         var m = 0, x = 1;
-        var pivot = xs.length === 9 ? 3 : 2;
+        var pivot = Math.max(2, xs.length - 6);
         for (var i = xs.length - 1; i >= pivot; i--) {
             m += x * xs[i];
             x *= 256;
@@ -85,6 +87,9 @@ module.exports.unpack = function unpack (xs) {
         }
         else if (pivot === 3) {
             var n = unpack([ xs[1], xs[2] + 21 ]);
+        }
+        else if (pivot === 4) {
+            var n = unpack([ xs[1], xs[2], xs[3] + 21 ]);
         }
         return 251 + m / Math.pow(2, 32 - n);
     }
