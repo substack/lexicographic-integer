@@ -1,4 +1,8 @@
-module.exports = function convert (n, enc) {
+module.exports = pack;
+module.exports.pack = pack;
+module.exports.unpack = unpack;
+
+function pack (n, enc) {
     n = Math.floor(n);
     if (n < 0 || n === Infinity) return undefined;
     
@@ -35,7 +39,7 @@ module.exports = function convert (n, enc) {
     else {
         var exp = Math.floor(Math.log(x) / Math.log(2)) - 32;
         bytes = [ 255 ];
-        bytes.push.apply(bytes, convert(exp));
+        bytes.push.apply(bytes, pack(exp));
         var res = x / Math.pow(2, exp - 11);
         bytes.push.apply(bytes, bytesOf(x / Math.pow(2, exp - 11)));
     }
@@ -52,7 +56,7 @@ module.exports = function convert (n, enc) {
     }
 };
 
-module.exports.unpack = function unpack (xs) {
+function unpack (xs) {
     if (!Array.isArray(xs)) return undefined;
     
     if (xs.length === 1 && xs[0] < 251) {
@@ -94,7 +98,7 @@ module.exports.unpack = function unpack (xs) {
         return 251 + m / Math.pow(2, 32 - n);
     }
     return undefined;
-};
+}
 
 function bytesOf (x) {
     x = Math.floor(x);
