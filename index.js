@@ -1,6 +1,5 @@
-module.exports = pack;
-module.exports.pack = pack;
-module.exports.unpack = unpack;
+exports.pack = pack;
+exports.unpack = unpack;
 
 function pack (n, enc) {
     n = Math.floor(n);
