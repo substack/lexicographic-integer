@@ -9,9 +9,11 @@ double) but all numbers less than 251 only take a single byte.
 
 # example
 
+## pack
+
 ``` js
-var convert = require('lexicographic-integer');
-console.log(convert(12345));
+var lexi = require('lexicographic-integer');
+console.log(lexi.pack(12345));
 ```
 
 output:
@@ -20,31 +22,46 @@ output:
 [ 252, 47, 62 ]
 ```
 
+## unpack
+
+To convert the arrays back into integers, just do `.unpack()`:
+
+``` js
+var lexi = require('lexicographic-integer');
+console.log(lexi.unpack([ 252, 47, 62 ]));
+```
+
+output:
+
+```
+12345
+```
+
 ## hex list
 
 ``` js
-var convert = require('lexicographic-integer');
+var lexi = require('lexicographic-integer');
 
 for (var n = 0; n < 5; n++) {
-    console.log(n, convert(n, 'hex'));
+    console.log(n, lexi.pack(n, 'hex'));
 }
 
 console.log('...');
 
 for (var n = 248; n < 257; n++) {
-    console.log(n, convert(n, 'hex'));
+    console.log(n, lexi.pack(n, 'hex'));
 }
 
 console.log('...');
 
 for (var n = 5000; n < 5005; n++) {
-    console.log(n, convert(n, 'hex'));
+    console.log(n, lexi.pack(n, 'hex'));
 }
 
 console.log('...');
 
 for (var n = 21378213; n < Number.MAX_VALUE; n *= 1513254198219212) {
-    console.log(n, convert(n, 'hex'));
+    console.log(n, lexi.pack(n, 'hex'));
 }
 ```
 
@@ -98,22 +115,27 @@ output:
 # methods
 
 ``` js
-var convert = require('lexicographic-integer')
+var lexi = require('lexicographic-integer')
 ```
 
-## convert(n, encoding='array')
+## lexi.pack(n, encoding='array')
 
 If `encoding` is `undefined` or `'array'`, return an array of byte values
 between 0 and 255, inclusive for the integer `n`.
 
 If `encoding` is `'hex'`, return a lexicographic hex string for the integer `n`.
 
+## lexi.unpack(bytes)
+
+Convert an array of `bytes` returned by `.pack()` back into the original
+javascript number.
+
 # install
 
 With [npm](https://npmjs.org) do:
 
 ```
-npm install lexicographic-number
+npm install lexicographic-integer
 ```
 
 # license
