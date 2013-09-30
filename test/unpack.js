@@ -1,11 +1,11 @@
-var convert = require('../');
+var lexi = require('../');
 var test = require('tape');
 
 test('unpack', function (t) {
     var skip = 1;
     for (var n = 1; n < Number.MAX_VALUE; n += skip) {
-        var cur = convert(n);
-        compare(n, convert.unpack(cur));
+        var cur = lexi.pack(n);
+        compare(n, lexi.unpack(cur));
         skip = 1 + Math.pow(245, Math.ceil(Math.log(n) / Math.log(256)));
     }
     t.equal(n, Infinity);
