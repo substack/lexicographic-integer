@@ -43,19 +43,11 @@ function pack (n, enc) {
         bytes.push.apply(bytes, bytesOf(x / Math.pow(2, exp - 11)));
     }
     if (enc === undefined || enc === 'array') return bytes;
-    if (enc === 'hex') {
-        var s = '';
-        for (var i = 0, l = bytes.length; i < l; i++) {
-            var b = bytes[i];
-            var c = b.toString(16);
-            if (b < 16) c = '0' + c;
-            s += c;
-        }
-        return s;
-    }
+    if (enc === 'hex') return encodeHex(bytes);
 };
 
 function unpack (xs) {
+    if (typeof xs === 'string') xs = decodeHex(xs);
     if (!Array.isArray(xs)) return undefined;
     
     if (xs.length === 1 && xs[0] < 251) {
@@ -97,6 +89,25 @@ function unpack (xs) {
         return 251 + m / Math.pow(2, 32 - n);
     }
     return undefined;
+}
+
+function encodeHex(bytes) {
+    var s = '';
+    for (var i = 0, l = bytes.length; i < l; i++) {
+        var b = bytes[i];
+        var c = b.toString(16);
+        if (b < 16) c = '0' + c;
+        s += c;
+    }
+    return s;
+}
+
+function decodeHex(hex) {
+    var bytes = [];
+    for (var i = 0; i < hex.length; i = i+2) {
+        bytes.push(parseInt(hex[i] + hex[i+1], 16));
+    }
+    return bytes;
 }
 
 function bytesOf (x) {
