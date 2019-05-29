@@ -4,7 +4,7 @@
   "description": "create lexicographic string keys for positive integers without zero-padding",
   "main": "index.js",
   "devDependencies": {
-    "tape": "~1.0.4"
+    "tape": "~4.10.2"
   },
   "scripts": {
     "test": "tape test/*.js"

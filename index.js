@@ -1,5 +1,6 @@
 exports.pack = pack;
 exports.unpack = unpack;
+exports.MAX_SAFE_INTEGER = Math.pow(2, 44) + 251;
 
 function pack (n, enc) {
     n = Math.floor(n);
