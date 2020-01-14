@@ -138,6 +138,12 @@ With [npm](https://npmjs.org) do:
 npm install lexicographic-integer
 ```
 
+The type definitions for this package are available on http://definitelytyped.org/. To install just use:
+
+ ```sh
+ $ npm install -D @types/lexicographic-integer
+ ```
+
 # license
 
 MIT
